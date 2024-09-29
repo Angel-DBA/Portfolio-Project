@@ -1,20 +1,19 @@
---select *
---from PortfolioProject..coviddeaths
---order by 3,4
+select *
+from PortfolioProject..coviddeaths
+order by 3,4
 
 
---SELECT *
---FROM PortfolioProject..covidvaccinations
---ORDER BY 3,4
+SELECT *
+FROM PortfolioProject..covidvaccinations
+ORDER BY 3,4
 
 -- select Data that we are going to be using
 
---select location, date,total_cases,new_cases,total_deaths,population
---from PortfolioProject..coviddeaths
---order by 1,2
+select location, date,total_cases,new_cases,total_deaths,population
+from PortfolioProject..coviddeaths
+order by 1,2
 
 --looking at the total cases vs total deaths
--- this shows the likelyhood of dying if you get covid in your country
 
 
 select location, date, total_cases, total_deaths, 
@@ -26,11 +25,11 @@ order by 1, 2;
 --looking at total cases vs population
 -- shows what percentage of population got covid
 
---select location, date, total_cases, population, 
---       (total_deaths / NULLIF(population, 0)) * 100 as covidpercentage
---from PortfolioProject..coviddeaths
---where location like '%Tanz%'
---order by 1, 2;
+select location, date, total_cases, population, 
+   (total_deaths / NULLIF(population, 0)) * 100 as covidpercentage
+from PortfolioProject..coviddeaths
+where location like '%Tanz%'
+order by 1, 2;
 
  looking at countries with highest infection rate compared to population
 
@@ -87,14 +86,14 @@ order by 1, 2;
 
 looking at total population vs vaccination
 
---select dea.location,dea.date,dea.population,vac.new_vaccinations,
---sum(TRY_CONVERT(BIGINT, vac.new_vaccinations)) OVER (PARTITION BY dea.location order by dea.location, dea.date) AS rollingpeoplevaccinated
---from PortfolioProject..coviddeaths dea
---join  PortfolioProject..covidvaccinations vac
---    on dea.location = vac.location
---	and dea.date = vac.date
---where dea.continent is not null
---order by 1,2,3;
+select dea.location,dea.date,dea.population,vac.new_vaccinations,
+sum(TRY_CONVERT(BIGINT, vac.new_vaccinations)) OVER (PARTITION BY dea.location order by dea.location, dea.date) AS rollingpeoplevaccinated
+from PortfolioProject..coviddeaths dea
+join  PortfolioProject..covidvaccinations vac
+ on dea.location = vac.location
+	and dea.date = vac.date
+where dea.continent is not null
+order by 1,2,3;
 
 
 --USE CTE
@@ -108,11 +107,11 @@ from PortfolioProject..coviddeaths dea
 join  PortfolioProject..covidvaccinations vac
     on dea.location = vac.location
 	and dea.date = vac.date
---where dea.continent is not null
---)
---select *,(rollingpeoplevaccinated/population)*100
---from popvsvac
---order by 1,2;
+where dea.continent is not null
+)
+select *,(rollingpeoplevaccinated/population)*100
+from popvsvac
+order by 1,2;
 
 ---TEMP TABLE
 
